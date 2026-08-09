@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const isAuth = require('../../../middlewares/auth');
 const { isAdmin, isHosted, isHostedOrAdmin } = require('../../../middlewares/checkUserRole');
+const authRateLimit = require('../../../middlewares/authRateLimit');
 
 const {
   signUpUser,
@@ -18,8 +19,8 @@ const {
 
 router.get('/', isAuth, isAdmin, getAllUsers);
 router.get('/:id', getOneUserForId);
-router.post('/signin', signInUser);
-router.post('/signup', signUpUser);
+router.post('/signin', authRateLimit, signInUser);
+router.post('/signup', authRateLimit, signUpUser);
 router.put('/update/profile/:id', isAuth, updateUserProfile);
 router.put('/update/profile/host/:id', isAuth, updateHostProfile);
 router.put('/update/:id', isAuth, isAdmin, updateUser);
