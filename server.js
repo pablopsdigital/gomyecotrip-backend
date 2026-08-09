@@ -17,6 +17,9 @@ if (process.env.NODE_ENV !== 'production') {
 //====================================================
 const app = express();
 
+//Trust Vercel's proxy so req.ip reflects the real client IP
+app.set('trust proxy', 1);
+
 //====================================================
 //Config database
 //====================================================
